@@ -17,11 +17,12 @@ class App extends Component {
                 {name: "Kirill Haupt", salary: 800, id: 1,},
                 {name: "Vasiliy Plutov", salary: 400, id: 2,},
                 {name: "Hanna Kaliada",salary: 400,id: 3,}
-            ]
-        }
+            ],
+            maxId: 4
+        };
     }
 
-    deleteItem = (id) => {
+    deleteEmployee = (id) => {
         this.setState(({data}) => {
             return {
                 data: data.filter(item => item.id !== id)
@@ -29,8 +30,27 @@ class App extends Component {
         })
     }
 
+    addEmployee = (name, salary, e) => {
+        e.preventDefault();
+
+        this.setState(({data, maxId}) => {
+            const newArr = JSON.parse(JSON.stringify(data));
+            newArr.push({
+                name,
+                salary,
+                id: maxId
+            })
+
+            return {
+                data: newArr,
+                maxId: maxId + 1
+            }
+        })
+    }
+
     render() {
         const {data} = this.state;
+
         return (
             <div className="app">
                 <AppInfo />
@@ -40,8 +60,8 @@ class App extends Component {
                     <AppFilter />
                 </div>
     
-                <EmployeesList data={data} onDelete={this.deleteItem}/>
-                <EmployeesAddForm />
+                <EmployeesList data={data} onDelete={this.deleteEmployee}/>
+                <EmployeesAddForm onCreate={this.addEmployee}/>
             </div>
         )
     }
