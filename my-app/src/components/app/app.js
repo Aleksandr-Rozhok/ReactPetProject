@@ -12,25 +12,21 @@ function App() {
         {
             name: "Aliaksandr Razhok",
             salary: 400,
-            increase: true,
             id: 0,
         },
         {
             name: "Kirill Haupt",
             salary: 800,
-            increase: false,
             id: 1,
         },
         {
             name: "Vasiliy Plutov",
             salary: 400,
-            increase: true,
             id: 2,
         },
         {
             name: "Hanna Kaliada",
             salary: 400,
-            increase: false,
             id: 3,
         }
     ];
