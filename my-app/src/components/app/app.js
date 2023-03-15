@@ -33,6 +33,10 @@ class App extends Component {
     addEmployee = (name, salary, e) => {
         e.preventDefault();
 
+        if (!name || !salary) {
+            return;
+        }
+
         this.setState(({data, maxId}) => {
             const newArr = JSON.parse(JSON.stringify(data));
             newArr.push({
