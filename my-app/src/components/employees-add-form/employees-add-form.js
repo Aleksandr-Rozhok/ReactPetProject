@@ -6,7 +6,9 @@ class EmployeesAddForm extends Component {
         super(props);
         this.state = {
             name: "",
-            salary: ""
+            salary: "",
+            increase: false,
+            rise: false
         }
     }
 
