@@ -31,8 +31,9 @@ class App extends Component {
         })
     }
 
-    addEmployee = (name, salary, e) => {
+    addEmployee = (name, salary, increase, rise, e) => {
         e.preventDefault();
+        e.target.reset()
 
         if (!name || !salary) {
             return;
@@ -43,6 +44,8 @@ class App extends Component {
             newArr.push({
                 name,
                 salary,
+                increase,
+                rise,
                 id: maxId
             })
 
@@ -114,7 +117,8 @@ class App extends Component {
                     data={visibleData}
                     onDelete={this.deleteEmployee}
                     onToggleProp={this.onToggleProp}
-                    editSalary={this.editSalary}/>
+                    editSalary={this.editSalary}
+                    onUpdateAddForm={this.onUpdateAddForm}/>
                 <EmployeesAddForm onCreate={this.addEmployee}/>
             </div>
         )
