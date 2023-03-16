@@ -7,29 +7,30 @@ class AppFilter extends Component {
         super(props);
         this.state = {
             buttonsData: [
-                {dataAttribute: '', label: 'Все сотрудники'},
-                {dataAttribute: 'onIncrease', label: 'Все сотрудники'},
-                {dataAttribute: 'moreThousand', label: 'Все сотрудники'}
+                {key: '', label: 'Все сотрудники'},
+                {key: 'onIncrease', label: 'На повышение'},
+                {key: 'moreThousand', label: 'З/П больше 1000$'}
             ],
             term: ""
         }
     }
 
     onUpdateFilter = (e) => {
-        const term = e.target.getAttribute('data-filter');
+        const term = e.target.getAttribute('name');
         this.setState({term});
         this.props.onUpdateFilters(term);
     }
 
     createButtons = (btnData) => {
-        return btnData.map(({dataAttribute, label}) => {
+        return btnData.map(({key, label}) => {
 
-            const active = this.state.term === dataAttribute;
+            const active = this.state.term === key;
             const clazz = active ? "btn-light" : "btn-outline-light";
 
             return (
                 <button 
-                        data-filter={dataAttribute} 
+                        key={key} 
+                        name={key}
                         onClick={this.onUpdateFilter} 
                         className={`btn ${clazz}`} 
                         type="button">

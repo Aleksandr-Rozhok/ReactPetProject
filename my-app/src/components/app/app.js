@@ -18,7 +18,6 @@ class App extends Component {
                 {name: "Vasiliy Plutov", salary: 400, increase: false, rise: false, id: 2,},
                 {name: "Hanna Kaliada",salary: 400, increase: false, rise: false, id: 3,}
             ],
-            newData: [],
             maxId: 4,
             term: "",
         };
@@ -83,6 +82,17 @@ class App extends Component {
         this.setState(({term}));
     }
 
+    editSalary = (id, value) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, salary: value.slice(0, -1)};
+                }
+                return item;
+            })
+        }))
+    }
+
     render() {
         const {data, term} = this.state;
         const increaseCount = data.reduce((acc, curr) => curr.increase ? acc + 1 : acc, 0);
@@ -103,7 +113,8 @@ class App extends Component {
                 <EmployeesList 
                     data={visibleData}
                     onDelete={this.deleteEmployee}
-                    onToggleProp={this.onToggleProp}/>
+                    onToggleProp={this.onToggleProp}
+                    editSalary={this.editSalary}/>
                 <EmployeesAddForm onCreate={this.addEmployee}/>
             </div>
         )
