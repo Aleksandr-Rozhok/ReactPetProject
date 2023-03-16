@@ -18,7 +18,9 @@ class App extends Component {
                 {name: "Vasiliy Plutov", salary: 400, increase: false, rise: false, id: 2,},
                 {name: "Hanna Kaliada",salary: 400, increase: false, rise: false, id: 3,}
             ],
-            maxId: 4
+            newData: [],
+            maxId: 4,
+            term: "",
         };
     }
 
@@ -63,9 +65,28 @@ class App extends Component {
         }))
     }
 
+    filterEmp = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        } else if (term === "onIncrease") {
+            return items.filter(item => item.increase)
+        } else if (term === "moreThousand") {
+            return items.filter(item => item.salary > 1000)
+        }
+            
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1;
+        })
+    }
+
+    onUpdateFilters = (term) => {
+        this.setState(({term}));
+    }
+
     render() {
-        const {data} = this.state;
-        let increaseCount = data.reduce((acc, curr) => curr.increase ? acc + 1 : acc, 0)
+        const {data, term} = this.state;
+        const increaseCount = data.reduce((acc, curr) => curr.increase ? acc + 1 : acc, 0);
+        const visibleData = this.filterEmp(data, term);
 
         return (
             <div className="app">
@@ -75,12 +96,12 @@ class App extends Component {
                      />
     
                 <div className="search-panel">
-                    <SearchPanel />
-                    <AppFilter />
+                    <SearchPanel onUpdateFilters={this.onUpdateFilters}/>
+                    <AppFilter onUpdateFilters={this.onUpdateFilters} />
                 </div>
     
                 <EmployeesList 
-                    data={data}
+                    data={visibleData}
                     onDelete={this.deleteEmployee}
                     onToggleProp={this.onToggleProp}/>
                 <EmployeesAddForm onCreate={this.addEmployee}/>
